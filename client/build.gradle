@@ -1,0 +1,96 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'war'
+apply plugin: 'eclipse-wtp'
+
+	eclipse.project {
+	natures 'org.springsource.ide.eclipse.gradle.core.nature',
+			'org.springframework.ide.eclipse.core.springnature',
+			'org.eclipse.jdt.core.javanature'
+	
+//	linkedResource name: 'Configuration', type: '2', locationUri: 'PARENT-2-PROJECT_LOC/Configuration'
+}
+
+version = '1.0.0-SNAPSHOT'
+group = 'com.ohadr.auth-flows'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+	mavenLocal()
+	mavenCentral()
+}
+
+ext {
+	ohadr_spring_security_version = "4.0.3.RELEASE"
+	ohadr_spring_version = "4.2.4.RELEASE"
+	ohadr_flows_version = "2.0.0-SNAPSHOT"
+}
+
+
+dependencies {
+	compile	"com.ohadr:authentication-flows:$ohadr_flows_version"
+	compile	"com.ohadr:common-crypto:$ohadr_flows_version"
+	compile	"org.springframework.security:spring-security-core:$ohadr_spring_security_version"
+	compile	"org.springframework.security:spring-security-config:$ohadr_spring_security_version"
+	compile	"org.springframework.security:spring-security-web:$ohadr_spring_security_version"
+	compile	"org.springframework.security:spring-security-taglibs:$ohadr_spring_security_version"
+	compile	"org.springframework:spring-web:$ohadr_spring_version"
+	compile	"org.springframework:spring-core:$ohadr_spring_version"
+	compile	"org.springframework:spring-aop:$ohadr_spring_version"
+	compile	"org.springframework:spring-context:$ohadr_spring_version"
+	compile	"org.springframework:spring-beans:$ohadr_spring_version"
+	compile	"org.springframework:spring-jdbc:$ohadr_spring_version"
+	compile	"org.springframework:spring-webmvc:$ohadr_spring_version"
+	compile	"org.springframework:spring-tx:$ohadr_spring_version"
+	compile	"org.springframework:spring-expression:$ohadr_spring_version"
+	compile "org.springframework:spring-context-support:$ohadr_spring_version"
+
+	compile	"cglib:cglib:2.2.2"
+	testCompile	"javax.servlet:servlet-api:2.5"
+	compile	"javax.servlet:jstl:1.2"
+
+	compile	"log4j:log4j:1.2.17"
+	compile	"commons-codec:commons-codec:1.5"
+
+
+
+	compile	"c3p0:c3p0:0.9.1.2"
+	compile	"mysql:mysql-connector-java:5.1.16"
+    compile "com.jamonapi:jamon:2.4"
+	compile	"commons-lang:commons-lang:2.6"
+    compile "org.apache.velocity:velocity:1.6.2"
+
+	//Pair impl -->
+	compile	"org.apache.commons:commons-lang3:3.1"
+
+	// sending emails... -->
+	compile	"javax.mail:mail:1.4.1"
+}
+
+
+		
+
+
+	
+sourceSets {
+	main {
+		java { 
+		}
+		resources {
+			srcDir '$projectDir/../src/main/resources/'
+		}
+	}
+}
+
+war {
+	baseName = 'auth-flows-client'
+	
+    manifest {
+        attributes(
+			'provider': 'gradle',
+			'Product-Version': version,
+            )
+    }
+}
